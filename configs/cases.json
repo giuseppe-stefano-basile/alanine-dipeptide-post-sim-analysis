@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "name": "npbc_corr_vs_pbc_corr_prod_only",
+      "description": "Corrected NPBC production vs corrected PBC production",
+      "npbc_prod_dump": "data/trajectories/npbc_corr_prod.dump",
+      "pbc_prod_dump": "data/trajectories/pbc_corr_prod.dump",
+      "npbc_prod_log": "data/trajectories/npbc_corr_prod.log",
+      "pbc_prod_log": "data/trajectories/pbc_corr_prod.log"
+    },
+    {
+      "name": "npbc_oldbias_vs_pbc_nvt_anchor_prod_only",
+      "description": "Old-bias NPBC production vs PBC NVT-anchor production",
+      "npbc_prod_dump": "data/trajectories/npbc_oldbias_prod.dump",
+      "pbc_prod_dump": "data/trajectories/pbc_nvt_anchor_prod.dump",
+      "npbc_prod_log": "data/trajectories/npbc_oldbias_prod.log",
+      "pbc_prod_log": "data/trajectories/pbc_nvt_anchor_prod.log"
+    }
+  ]
+}

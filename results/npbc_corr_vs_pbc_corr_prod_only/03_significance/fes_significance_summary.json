@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "global_fes_significant_if": "JSD 95% CI lower bound > 0 and Overlap 95% CI upper bound < 1"
+  },
+  "coarse_grid": {
+    "jsd_mean": 0.1199104787749929,
+    "jsd_95ci": [
+      0.0490200061576403,
+      0.22906826370502184
+    ],
+    "overlap_mean": 0.6814261073892609,
+    "overlap_95ci": [
+      0.49758274172582745,
+      0.8082941705829417
+    ],
+    "global_fes_difference_significant_95": true
+  },
+  "fine_grid": {
+    "jsd_mean": 0.19144511068724668,
+    "jsd_95ci": [
+      0.12262309695199824,
+      0.2918244450847856
+    ],
+    "overlap_mean": 0.5761668833116689,
+    "overlap_95ci": [
+      0.42928207179282074,
+      0.6741025897410261
+    ],
+    "global_fes_difference_significant_95": true
+  },
+  "basin_population_significance": {
+    "n_significant_95": 0,
+    "n_total": 8,
+    "significant_rows_from_csv": []
+  }
+}

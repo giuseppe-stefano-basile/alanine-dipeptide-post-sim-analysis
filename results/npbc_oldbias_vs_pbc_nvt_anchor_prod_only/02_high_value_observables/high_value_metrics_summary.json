@@ -1,0 +1,39 @@
+{
+  "frames": {
+    "npbc": 10001,
+    "pbc": 10001
+  },
+  "torsion_autocorrelation": {
+    "iact_phi_frames_npbc": 433.53746578979104,
+    "iact_phi_frames_pbc": 479.9513102700424,
+    "iact_psi_frames_npbc": 250.39730939695525,
+    "iact_psi_frames_pbc": 273.42051937470137,
+    "frame_dt_ps_npbc": 10.0,
+    "frame_dt_ps_pbc": 10.0
+  },
+  "coordination": {
+    "all_heavy": {
+      "npbc": 1.8688622754491018,
+      "pbc": 2.3359281437125747,
+      "delta_npbc_minus_pbc": -0.46706586826347296
+    },
+    "O_acceptor": {
+      "npbc": 2.94311377245509,
+      "pbc": 3.541916167664671,
+      "delta_npbc_minus_pbc": -0.5988023952095811
+    },
+    "N_site": {
+      "npbc": 1.9231536926147705,
+      "pbc": 2.2634730538922154,
+      "delta_npbc_minus_pbc": -0.3403193612774449
+    }
+  },
+  "hbond_lifetime_ps": {
+    "solute_to_water_mean_npbc": 12.708333333333334,
+    "solute_to_water_mean_pbc": 12.3989898989899,
+    "water_to_solute_mean_npbc": 13.015332197614992,
+    "water_to_solute_mean_pbc": 13.758680555555555,
+    "all_mean_npbc": 12.93966623876765,
+    "all_mean_pbc": 13.410852713178295
+  }
+}

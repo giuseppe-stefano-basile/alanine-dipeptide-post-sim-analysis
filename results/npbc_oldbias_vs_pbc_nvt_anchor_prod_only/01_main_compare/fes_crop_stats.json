@@ -1,0 +1,34 @@
+{
+  "raw_72": {
+    "enabled": true,
+    "policy": "either",
+    "min_prob": 0.0,
+    "masked_fraction": 0.7768,
+    "masked_bins": 1942,
+    "total_bins": 2500
+  },
+  "raw_144": {
+    "enabled": true,
+    "policy": "either",
+    "min_prob": 0.0,
+    "masked_fraction": 0.8805,
+    "masked_bins": 8805,
+    "total_bins": 10000
+  },
+  "balanced_72": {
+    "enabled": true,
+    "policy": "either",
+    "min_prob": 0.0,
+    "masked_fraction": 0.7768,
+    "masked_bins": 1942,
+    "total_bins": 2500
+  },
+  "balanced_144": {
+    "enabled": true,
+    "policy": "either",
+    "min_prob": 0.0,
+    "masked_fraction": 0.8805,
+    "masked_bins": 8805,
+    "total_bins": 10000
+  }
+}

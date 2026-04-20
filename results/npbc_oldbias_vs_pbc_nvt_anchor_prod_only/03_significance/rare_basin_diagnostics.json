@@ -1,0 +1,102 @@
+{
+  "criterion": {
+    "rare_threshold_balanced_population": 0.02,
+    "fortuitous_heuristic": "possibly_fortuitous if basin delta is not significant and either (both NPBC/PBC balanced populations <0.005) or (NPBC first-entry >=0.7 ns and NPBC to-events <=2)"
+  },
+  "global_context": {
+    "transition_events": {
+      "npbc_n": 502,
+      "pbc_n": 541
+    },
+    "basin_significance": {
+      "n_significant_95": 0,
+      "n_total": 8
+    }
+  },
+  "rare_basins": [
+    {
+      "basin": "alphaR",
+      "npbc_bal_mean": 0.009366530938934303,
+      "pbc_bal_mean": 0.011168289816915165,
+      "delta_ci_lo": -0.011643051230832738,
+      "delta_ci_hi": 0.009469024422749895,
+      "delta_significant_95": false,
+      "npbc_first_entry_time_ns": 0.065,
+      "pbc_first_entry_time_ns": 0.073,
+      "npbc_to_events": 30,
+      "pbc_to_events": 64,
+      "fortuitous_label": "uncertain"
+    },
+    {
+      "basin": "alpha_prime",
+      "npbc_bal_mean": 0.0030401431431272856,
+      "pbc_bal_mean": 0.005443786280088575,
+      "delta_ci_lo": -0.0064382016865919016,
+      "delta_ci_hi": 0.001404133257524176,
+      "delta_significant_95": false,
+      "npbc_first_entry_time_ns": 0.19649999999999998,
+      "pbc_first_entry_time_ns": 0.6035010000000001,
+      "npbc_to_events": 27,
+      "pbc_to_events": 60,
+      "fortuitous_label": "uncertain"
+    },
+    {
+      "basin": "PPII",
+      "npbc_bal_mean": 0.020960950110699123,
+      "pbc_bal_mean": 0.01809454895663236,
+      "delta_ci_lo": -0.006064539538983389,
+      "delta_ci_hi": 0.012049284434670555,
+      "delta_significant_95": false,
+      "npbc_first_entry_time_ns": 0.0155,
+      "pbc_first_entry_time_ns": 0.014499999999999999,
+      "npbc_to_events": 106,
+      "pbc_to_events": 129,
+      "fortuitous_label": "uncertain"
+    },
+    {
+      "basin": "alphaL",
+      "npbc_bal_mean": 0.00012823221109357541,
+      "pbc_bal_mean": 0.00011073127586019823,
+      "delta_ci_lo": -0.00030552212177938185,
+      "delta_ci_hi": 0.00029791172761172205,
+      "delta_significant_95": false,
+      "npbc_first_entry_time_ns": 1.106001,
+      "pbc_first_entry_time_ns": 0.664501,
+      "npbc_to_events": 28,
+      "pbc_to_events": 3,
+      "fortuitous_label": "possibly_fortuitous"
+    },
+    {
+      "basin": "alphaL_C7ax",
+      "npbc_bal_mean": 0.0,
+      "pbc_bal_mean": 0.0,
+      "delta_ci_lo": 0.0,
+      "delta_ci_hi": 0.0,
+      "delta_significant_95": false,
+      "npbc_first_entry_time_ns": 0.1035,
+      "pbc_first_entry_time_ns": NaN,
+      "npbc_to_events": 49,
+      "pbc_to_events": 0,
+      "fortuitous_label": "possibly_fortuitous"
+    },
+    {
+      "basin": "C7ax",
+      "npbc_bal_mean": 0.0019048424923249988,
+      "pbc_bal_mean": 0.0010580599324110632,
+      "delta_ci_lo": -0.0016689420334575805,
+      "delta_ci_hi": 0.004302666207726098,
+      "delta_significant_95": false,
+      "npbc_first_entry_time_ns": 0.066,
+      "pbc_first_entry_time_ns": 2.453501,
+      "npbc_to_events": 65,
+      "pbc_to_events": 7,
+      "fortuitous_label": "possibly_fortuitous"
+    }
+  ],
+  "counts": {
+    "n_rare_basins": 6,
+    "n_possibly_fortuitous": 3,
+    "n_supported_difference": 0,
+    "n_uncertain": 3
+  }
+}

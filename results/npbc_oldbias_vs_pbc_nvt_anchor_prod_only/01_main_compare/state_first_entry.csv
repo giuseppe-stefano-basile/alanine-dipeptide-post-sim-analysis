@@ -1,0 +1,16 @@
+lane,state,frame_index,source,step,time_ns
+npbc,C5,0,eq,500000,0.0
+npbc,PPII,31,eq,515500,0.0155
+npbc,C7eq,115,eq,557500,0.057499999999999996
+npbc,alphaR,130,eq,565000,0.065
+npbc,C7ax,132,eq,566000,0.066
+npbc,alphaL_C7ax,207,eq,603500,0.1035
+npbc,alpha_prime,393,eq,696500,0.19649999999999998
+npbc,alphaL,2213,prod,1606500,1.106001
+pbc,C5,0,eq,500000,0.0
+pbc,PPII,29,eq,514500,0.014499999999999999
+pbc,alphaR,146,eq,573000,0.073
+pbc,C7eq,383,eq,691500,0.1915
+pbc,alpha_prime,1208,prod,1104000,0.6035010000000001
+pbc,alphaL,1330,prod,1165000,0.664501
+pbc,C7ax,4908,prod,2954000,2.453501
