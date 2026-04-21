@@ -14,7 +14,7 @@ Required per comparison case:
 - optional logs (`*.log`) for completion checks
 
 Provided in this repository:
-- case mapping: `configs/cases.json`
+- case mapping: `configs/production_comparison_cases.json`
 - trajectory links: `data/trajectories/`
 
 ## 2) Environment (No `mace_new` Needed)
@@ -36,18 +36,18 @@ pip install -r environment/requirements.txt
 
 Run from repository root.
 
-1. `./scripts/00_check_inputs.sh`
-2. `./scripts/05_run_case_pipeline.sh <case_name> [bootstrap_reps] [high_value_frame_stride]`
+1. `./scripts/00_validate_production_inputs.sh`
+2. `./scripts/05_run_single_comparison_case.sh <case_name> [bootstrap_reps] [high_value_frame_stride]`
 
 For all cases:
 
 ```bash
-./scripts/run_all_cases.sh [bootstrap_reps] [high_value_frame_stride]
+./scripts/run_all_comparison_cases.sh [bootstrap_reps] [high_value_frame_stride]
 ```
 
 ## 4) What Each Script Produces
 
-### `00_check_inputs.sh`
+### `00_validate_production_inputs.sh`
 Purpose:
 - validates that configured production trajectories exist
 - prints frame counts, timestep range, stride, and log completion lines
@@ -55,7 +55,7 @@ Purpose:
 Output:
 - terminal summary only (validation report)
 
-### `01_split_production_dump.py`
+### `01_prepare_production_chunks_for_legacy_tools.py`
 Purpose:
 - splits each production dump into `pseudo_eq` and `pseudo_prod` chunks only to satisfy legacy interfaces
 - does **not** use real equilibration trajectories
@@ -67,7 +67,7 @@ Output (per case workspace):
 - `workspaces/<case>/pbc_prod.dump`
 - `workspaces/<case>/split_manifest.json`
 
-### `02_run_main_compare.py`
+### `02_run_fes_basin_structural_analysis.py`
 Purpose (comprehensive FES + basin treatment):
 - block-bootstrap uncertainty (time-correlation-aware)
 - coarse/fine FES grids (50x50 and 100x100)
@@ -80,7 +80,7 @@ Output:
 - `results/<case>/01_main_compare/report.md`
 - FES, marginals, transitions, basin CSV/plots
 
-### `03_run_high_value_observables.py`
+### `03_run_hydration_hbond_coordination_analysis.py`
 Purpose (high-value observables):
 - hydration shell occupancy
 - H-bond statistics
@@ -92,7 +92,7 @@ Output:
 - `results/<case>/02_high_value_observables/high_value_report.md`
 - observable CSV and plots
 
-### `04_assess_fes_significance.py`
+### `04_summarize_fes_statistical_significance.py`
 Purpose:
 - turns bootstrap metrics into an explicit significance decision
 
@@ -103,7 +103,7 @@ Output:
 - `results/<case>/03_significance/fes_significance_summary.json`
 - `results/<case>/03_significance/fes_significance_summary.md`
 
-### `06_rare_basin_diagnostics.py`
+### `06_diagnose_rare_basin_visits.py`
 Purpose:
 - checks whether rare-basin NPBC visits may be fortuitous
 - combines basin populations, first-entry timing, and transition-event counts
@@ -114,7 +114,7 @@ Output:
 
 ## 5) Which Comparisons Are Configured
 
-Current production-only cases in `configs/cases.json`:
+Current production-only cases in `configs/production_comparison_cases.json`:
 - `npbc_corr_vs_pbc_corr_prod_only`
 - `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`
 
@@ -122,7 +122,7 @@ These are the target simulation pairs to compare in this training repository.
 
 ## 6) Suggested Teaching Workflow
 
-1. Validate inputs with `00_check_inputs.sh`.
+1. Validate inputs with `00_validate_production_inputs.sh`.
 2. Run one case with `bootstrap_reps=300` for a classroom demo.
 3. Re-run the same case with `bootstrap_reps=1000` for final reporting.
 4. Use `high_value_frame_stride=10` for quick teaching demos and `1` for final-quality observables.

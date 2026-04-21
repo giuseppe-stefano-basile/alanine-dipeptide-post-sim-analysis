@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-CASES_JSON="$REPO_DIR/configs/cases.json"
+CASES_JSON="$REPO_DIR/configs/production_comparison_cases.json"
 BOOTSTRAP_REPS="${1:-1000}"
 HV_FRAME_STRIDE="${2:-1}"
 
@@ -18,7 +18,7 @@ PY
 )
 
 for c in "${CASES[@]}"; do
-  "$SCRIPT_DIR/05_run_case_pipeline.sh" "$c" "$BOOTSTRAP_REPS" "$HV_FRAME_STRIDE"
+  "$SCRIPT_DIR/05_run_single_comparison_case.sh" "$c" "$BOOTSTRAP_REPS" "$HV_FRAME_STRIDE"
 done
 
 echo "All cases completed."

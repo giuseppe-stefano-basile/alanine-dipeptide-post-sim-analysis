@@ -37,18 +37,18 @@ conda env create -f environment/conda_postsim.yml
 conda activate postsim-analysis
 
 # verify input trajectories
-./scripts/00_check_inputs.sh
+./scripts/00_validate_production_inputs.sh
 
 # run all configured production-only cases
-./scripts/run_all_cases.sh 1000 1
+./scripts/run_all_comparison_cases.sh 1000 1
 
 # fast classroom demo (lighter bootstrap and subsampled high-value observables)
-./scripts/run_all_cases.sh 300 10
+./scripts/run_all_comparison_cases.sh 300 10
 ```
 
 Student teaching guide:
 
-- `docs/STUDENT_POSTSIM_WORKFLOW.md`
+- `docs/MASTER_STUDENT_TRAJECTORY_ANALYSIS_WORKFLOW.md`
 
 ## Inputs Required
 
@@ -58,7 +58,7 @@ Each case requires:
 - Optional: corresponding production logs (used for completion checks)
 
 All configured defaults are already mapped in:
-- `configs/cases.json`
+- `configs/production_comparison_cases.json`
 
 ## Outputs Expected (per case)
 
