@@ -1,10 +1,46 @@
 # Data Requirements
 
-This repository does not contain raw production trajectories. Large trajectory dumps must be transferred separately and passed to the scripts with `--search-root`.
+This repository contains one corrected OFF23 tutorial comparison through Git LFS. Final Leonardo production trajectories are not committed to normal Git history and must be transferred separately, then passed to the scripts with `--search-root`.
+
+## Bundled Tutorial Reference
+
+After cloning, fetch the Git LFS tutorial files:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+Bundled files:
+
+```text
+data/tutorial_reference/
+  npbc_corr_prod.dump
+  pbc_corr_prod.dump
+  npbc_corr_prod.log
+  pbc_corr_prod.log
+  CHECKSUMS.sha256
+```
+
+Run the corrected tutorial comparison with:
+
+```bash
+SEARCH_ROOT=data/tutorial_reference
+
+./scripts/00_validate_production_inputs.sh \
+  --case npbc_corr_vs_pbc_corr_prod_only \
+  --search-root "$SEARCH_ROOT"
+
+./scripts/05_run_single_comparison_case.sh \
+  --case npbc_corr_vs_pbc_corr_prod_only \
+  --search-root "$SEARCH_ROOT" \
+  --bootstrap-reps 300 \
+  --high-value-frame-stride 10
+```
 
 ## Official Student Case
 
-The default student comparison is:
+The final student comparison is:
 
 - case name: `leonardo_npt_prod_only`
 - comparison: final Leonardo NPBC production vs final Leonardo PBC production
@@ -84,4 +120,4 @@ Compare these values with the checksums generated on Leonardo when the files wer
 
 ## Important
 
-Do not commit raw `.dump`, `.lammpstrj`, `.dcd`, `.xtc`, `.trr`, `.nc`, or large `.log` files to GitHub. The repository contains analysis scripts, documentation, configs, and small reference outputs only.
+Do not commit new raw `.dump`, `.lammpstrj`, `.dcd`, `.xtc`, `.trr`, `.nc`, or large `.log` files to normal Git history. The only committed dump files should be intentional Git LFS tutorial-reference files. Future Leonardo dumps should remain external unless they are deliberately added through Git LFS or a separate release bundle.

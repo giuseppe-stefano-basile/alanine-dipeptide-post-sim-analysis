@@ -13,6 +13,10 @@ data/**/*.xtc
 data/**/*.trr
 data/**/*.nc
 data/**/*.log
+!data/tutorial_reference/
+!data/tutorial_reference/*.dump
+!data/tutorial_reference/*.log
+!data/tutorial_reference/CHECKSUMS.sha256
 
 # Optional local env
 .venv/

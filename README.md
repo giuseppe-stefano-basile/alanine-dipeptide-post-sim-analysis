@@ -19,7 +19,7 @@ Default methodological policy (teaching + rigor):
 ## Repository Layout
 
 - `configs/`: comparison case definitions.
-- `data/`: optional local scratch area only; input discovery does not depend on it.
+- `data/`: Git LFS tutorial reference data plus optional local scratch area.
 - `environment/`: environment setup for students without `mace_new`.
 - `scripts/`: clean pipeline scripts.
 - `docs/`: student-oriented didactic guide.
@@ -32,31 +32,35 @@ Default methodological policy (teaching + rigor):
 ```bash
 cd /path/to/post_sim_analysis_repo
 
+# fetch the bundled corrected tutorial dumps
+git lfs install
+git lfs pull
+
 # create env (no mace_new required)
 conda env create -f environment/conda_postsim.yml
 conda activate postsim-analysis
 
-# choose where this repo should search for completed trajectories/logs
-SEARCH_ROOT=/path/to/npt_bulk_equilibration_workflow
+# bundled tutorial reference case
+SEARCH_ROOT=data/tutorial_reference
 
 # verify input trajectories
 ./scripts/00_validate_production_inputs.sh \
-  --case leonardo_npt_prod_only \
+  --case npbc_corr_vs_pbc_corr_prod_only \
   --search-root "$SEARCH_ROOT"
 
 # fast classroom demo (lighter bootstrap and subsampled high-value observables)
 ./scripts/05_run_single_comparison_case.sh \
-  --case leonardo_npt_prod_only \
+  --case npbc_corr_vs_pbc_corr_prod_only \
   --search-root "$SEARCH_ROOT" \
   --bootstrap-reps 300 \
   --high-value-frame-stride 10
 
-# run selected configured cases; omit --case only when the search root contains all inputs
-./scripts/run_all_comparison_cases.sh \
+# final Leonardo case, after transferring the external trajectory bundle
+SEARCH_ROOT=/path/to/trajectory_bundle
+
+./scripts/00_validate_production_inputs.sh \
   --case leonardo_npt_prod_only \
-  --search-root "$SEARCH_ROOT" \
-  --bootstrap-reps 1000 \
-  --high-value-frame-stride 1
+  --search-root "$SEARCH_ROOT"
 ```
 
 Student teaching guide:
@@ -71,17 +75,17 @@ Each case requires:
 - `pbc_prod_dump`
 - Optional: corresponding production logs (used for completion checks)
 
-The config stores only file names, relative paths, or glob patterns. The user must choose one or more directories to search with `--search-root`; no local machine path or repo-local trajectory directory is assumed.
+The config stores only file names, relative paths, or glob patterns. The user must choose one or more directories to search with `--search-root`; no local machine path is assumed.
 
-Before running the scripts on a new machine, read `DATA_REQUIREMENTS.md` and set `SEARCH_ROOT` to the directory containing the transferred Leonardo production outputs.
+The corrected tutorial case is bundled under `data/tutorial_reference` using Git LFS. Before running the Leonardo final case on a new machine, read `DATA_REQUIREMENTS.md` and set `SEARCH_ROOT` to the directory containing the transferred Leonardo production outputs.
 
 All configured cases are mapped in:
 - `configs/production_comparison_cases.json`
 
 Included case names:
 - `leonardo_npt_prod_only`: reads the expected Leonardo workflow outputs (`npbc_production/traj_alanine_nbpc_prod.dump` and `pbc_production/traj_alanine_pbc_prod.dump`, with alternate `logs/dump.*.lammpstrj` names).
-- `npbc_corr_vs_pbc_corr_prod_only`
-- `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`
+- `npbc_corr_vs_pbc_corr_prod_only`: bundled corrected tutorial reference case; use `--search-root data/tutorial_reference`.
+- `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`: optional older OFF23 example; input files are not bundled.
 
 ## Outputs Expected (per case)
 

@@ -1,7 +1,13 @@
 # Data Scratch Area
 
-This directory is optional local scratch space. The analysis scripts do not assume that trajectories live here.
+This directory contains the Git LFS-backed corrected tutorial reference data and can also be used as optional local scratch space.
 
-For student runs, place or extract trajectory bundles anywhere convenient and pass that directory with `--search-root`.
+For the bundled tutorial case, use:
 
-Raw trajectory files are ignored by Git.
+```bash
+SEARCH_ROOT=data/tutorial_reference
+```
+
+For Leonardo or other student runs, place or extract trajectory bundles anywhere convenient and pass that directory with `--search-root`.
+
+Raw trajectory files are ignored by Git unless they are intentionally allowed and tracked through Git LFS.

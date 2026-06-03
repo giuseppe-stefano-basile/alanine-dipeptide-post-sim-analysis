@@ -16,13 +16,17 @@ Required per comparison case:
 Provided in this repository:
 - case mapping: `configs/production_comparison_cases.json`
 - data-transfer instructions: `DATA_REQUIREMENTS.md`
+- corrected tutorial reference files in `data/tutorial_reference` after `git lfs pull`
 
 Not provided by the repository:
-- the location of your trajectories. Every command asks you to choose one or more `--search-root` directories. These can be an extracted Leonardo workflow directory, a download folder, or any directory containing the needed dumps/logs.
+- the final Leonardo trajectories. Every command asks you to choose one or more `--search-root` directories. These can be `data/tutorial_reference`, an extracted Leonardo workflow directory, a download folder, or any directory containing the needed dumps/logs.
 
 ## 2) Environment (No `mace_new` Needed)
 
 ```bash
+git lfs install
+git lfs pull
+
 conda env create -f environment/conda_postsim.yml
 conda activate postsim-analysis
 ```
@@ -37,13 +41,29 @@ pip install -r environment/requirements.txt
 
 ## 3) Script Order (Use These Names)
 
-Run from repository root. First choose the directory where the scripts should search for completed trajectories and logs:
+Run from repository root. Start with the bundled corrected tutorial reference:
 
 ```bash
-SEARCH_ROOT=/path/to/npt_bulk_equilibration_workflow
+SEARCH_ROOT=data/tutorial_reference
+
+./scripts/00_validate_production_inputs.sh \
+  --case npbc_corr_vs_pbc_corr_prod_only \
+  --search-root "$SEARCH_ROOT"
+
+./scripts/05_run_single_comparison_case.sh \
+  --case npbc_corr_vs_pbc_corr_prod_only \
+  --search-root "$SEARCH_ROOT" \
+  --bootstrap-reps 300 \
+  --high-value-frame-stride 10
 ```
 
-For the official Leonardo student case, `SEARCH_ROOT` should be the directory containing `npbc_production/` and `pbc_production/`. See `DATA_REQUIREMENTS.md` for the expected bundle layout.
+For the final Leonardo student case, first choose the external directory where the scripts should search for completed trajectories and logs:
+
+```bash
+SEARCH_ROOT=/path/to/trajectory_bundle
+```
+
+For the Leonardo student case, `SEARCH_ROOT` should be the directory containing `npbc_production/` and `pbc_production/`. See `DATA_REQUIREMENTS.md` for the expected bundle layout.
 
 1. `./scripts/00_validate_production_inputs.sh --case leonardo_npt_prod_only --search-root "$SEARCH_ROOT"`
 2. `./scripts/05_run_single_comparison_case.sh <case_name> --search-root "$SEARCH_ROOT" --bootstrap-reps <n> --high-value-frame-stride <stride>`
@@ -128,11 +148,11 @@ Output:
 ## 5) Which Comparisons Are Configured
 
 Current production-only cases in `configs/production_comparison_cases.json`:
-- `leonardo_npt_prod_only`
-- `npbc_corr_vs_pbc_corr_prod_only`
-- `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`
+- `npbc_corr_vs_pbc_corr_prod_only`: bundled corrected tutorial reference; use `--search-root data/tutorial_reference`
+- `leonardo_npt_prod_only`: final Leonardo comparison; use the transferred external bundle
+- `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`: optional older OFF23 example; input files are not bundled
 
-The config stores file names, relative paths, or glob patterns, not machine-specific absolute directories. For the Leonardo NPT workflow, use the extracted workflow folder as `--search-root`; the resolver looks for the expected production outputs under `npbc_production/` and `pbc_production/`.
+The config stores file names, relative paths, or glob patterns, not machine-specific absolute directories. For the tutorial case, use `data/tutorial_reference` as `--search-root`. For the Leonardo NPT workflow, use the extracted workflow folder as `--search-root`; the resolver looks for the expected production outputs under `npbc_production/` and `pbc_production/`.
 
 ## 6) Suggested Teaching Workflow
 
