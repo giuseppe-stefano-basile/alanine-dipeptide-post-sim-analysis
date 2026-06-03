@@ -119,12 +119,21 @@ def split_dump(src: Path, dst_eq: Path, dst_prod: Path, eq_frames: int) -> dict:
     }
 
 
+def display_path(path: Path, base: Path) -> str:
+    absolute = path.expanduser().absolute()
+    try:
+        return str(absolute.relative_to(base.resolve()))
+    except ValueError:
+        return str(absolute)
+
+
 def main() -> None:
     args = parse_args()
 
-    npbc_src = Path(args.npbc_prod).resolve()
-    pbc_src = Path(args.pbc_prod).resolve()
-    workspace = Path(args.workspace).resolve()
+    repo_dir = Path(__file__).resolve().parents[1]
+    npbc_src = Path(args.npbc_prod).expanduser().absolute()
+    pbc_src = Path(args.pbc_prod).expanduser().absolute()
+    workspace = Path(args.workspace).expanduser().absolute()
     workspace.mkdir(parents=True, exist_ok=True)
 
     npbc_eq = workspace / "npbc_eq.dump"
@@ -134,6 +143,10 @@ def main() -> None:
 
     npbc_summary = split_dump(npbc_src, npbc_eq, npbc_prod, args.eq_frames)
     pbc_summary = split_dump(pbc_src, pbc_eq, pbc_prod, args.eq_frames)
+    for item in (npbc_summary, pbc_summary):
+        item["source"] = display_path(Path(item["source"]), repo_dir)
+        item["pseudo_eq_file"] = display_path(Path(item["pseudo_eq_file"]), repo_dir)
+        item["pseudo_prod_file"] = display_path(Path(item["pseudo_prod_file"]), repo_dir)
 
     summary = {
         "mode": "production_only_split",

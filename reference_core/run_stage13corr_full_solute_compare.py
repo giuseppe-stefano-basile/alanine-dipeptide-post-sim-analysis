@@ -25,27 +25,29 @@ def parse_args() -> argparse.Namespace:
     )
     ap.add_argument(
         "--stage-root",
-        default="Alanine_dipeptide/MACE-OFF_2023_small/stage13_alanine_prepared/stage13corr_s991000_20260319_194116",
+        required=True,
+        help="Directory containing the selected NPBC/PBC dump files.",
     )
     ap.add_argument(
         "--analysis-module",
-        default="Alanine_dipeptide/MACE-OFF_2023_small/analyze_stage13_dihedrals.py",
+        required=True,
+        help="Path to analyze_stage13_dihedrals.py.",
     )
     ap.add_argument(
         "--npbc-eq-dump",
-        default="npbc/traj_alanine_nbpc_off23_stage13corr_s991000_20260319_194116_eq.dump",
+        required=True,
     )
     ap.add_argument(
         "--npbc-prod-dump",
-        default="npbc/traj_alanine_nbpc_off23_stage13corr_s991000_20260319_194116_prod.dump",
+        required=True,
     )
     ap.add_argument(
         "--pbc-eq-dump",
-        default="pbc/traj_alanine_pbc_off23_stage13corr_s991000_20260319_194116_eq.dump",
+        required=True,
     )
     ap.add_argument(
         "--pbc-prod-dump",
-        default="pbc/traj_alanine_pbc_off23_stage13corr_s991000_20260319_194116_prod.dump",
+        required=True,
     )
     ap.add_argument("--bootstrap-reps", type=int, default=1000)
     ap.add_argument("--seed", type=int, default=12345)

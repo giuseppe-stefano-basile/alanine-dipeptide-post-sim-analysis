@@ -1,6 +1,6 @@
 # Alanine Dipeptide Post-Simulation Analysis Repository
 
-This repository is a student-facing, production-only analysis workflow for OFF23 stage13 trajectories.
+This repository is a student-facing, production-only analysis workflow for OFF23 alanine dipeptide trajectories, including the Leonardo NPT -> NPBC/PBC production workflow.
 
 Goals:
 - Use **completed production simulations only**.
@@ -19,7 +19,7 @@ Default methodological policy (teaching + rigor):
 ## Repository Layout
 
 - `configs/`: comparison case definitions.
-- `data/`: symlinks to source trajectories and logs.
+- `data/`: optional local scratch area only; input discovery does not depend on it.
 - `environment/`: environment setup for students without `mace_new`.
 - `scripts/`: clean pipeline scripts.
 - `docs/`: student-oriented didactic guide.
@@ -30,25 +30,39 @@ Default methodological policy (teaching + rigor):
 ## Quick Start
 
 ```bash
-cd /home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo
+cd /path/to/post_sim_analysis_repo
 
 # create env (no mace_new required)
 conda env create -f environment/conda_postsim.yml
 conda activate postsim-analysis
 
-# verify input trajectories
-./scripts/00_validate_production_inputs.sh
+# choose where this repo should search for completed trajectories/logs
+SEARCH_ROOT=/path/to/npt_bulk_equilibration_workflow
 
-# run all configured production-only cases
-./scripts/run_all_comparison_cases.sh 1000 1
+# verify input trajectories
+./scripts/00_validate_production_inputs.sh \
+  --case leonardo_npt_prod_only \
+  --search-root "$SEARCH_ROOT"
 
 # fast classroom demo (lighter bootstrap and subsampled high-value observables)
-./scripts/run_all_comparison_cases.sh 300 10
+./scripts/05_run_single_comparison_case.sh \
+  --case leonardo_npt_prod_only \
+  --search-root "$SEARCH_ROOT" \
+  --bootstrap-reps 300 \
+  --high-value-frame-stride 10
+
+# run selected configured cases; omit --case only when the search root contains all inputs
+./scripts/run_all_comparison_cases.sh \
+  --case leonardo_npt_prod_only \
+  --search-root "$SEARCH_ROOT" \
+  --bootstrap-reps 1000 \
+  --high-value-frame-stride 1
 ```
 
 Student teaching guide:
 
 - `docs/MASTER_STUDENT_TRAJECTORY_ANALYSIS_WORKFLOW.md`
+- `DATA_REQUIREMENTS.md`
 
 ## Inputs Required
 
@@ -57,8 +71,17 @@ Each case requires:
 - `pbc_prod_dump`
 - Optional: corresponding production logs (used for completion checks)
 
-All configured defaults are already mapped in:
+The config stores only file names, relative paths, or glob patterns. The user must choose one or more directories to search with `--search-root`; no local machine path or repo-local trajectory directory is assumed.
+
+Before running the scripts on a new machine, read `DATA_REQUIREMENTS.md` and set `SEARCH_ROOT` to the directory containing the transferred Leonardo production outputs.
+
+All configured cases are mapped in:
 - `configs/production_comparison_cases.json`
+
+Included case names:
+- `leonardo_npt_prod_only`: reads the expected Leonardo workflow outputs (`npbc_production/traj_alanine_nbpc_prod.dump` and `pbc_production/traj_alanine_pbc_prod.dump`, with alternate `logs/dump.*.lammpstrj` names).
+- `npbc_corr_vs_pbc_corr_prod_only`
+- `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`
 
 ## Outputs Expected (per case)
 

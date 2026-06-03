@@ -65,15 +65,12 @@ class LaneParse:
 
 
 def parse_args() -> argparse.Namespace:
-    root_default = Path(
-        "Alanine_dipeptide/MACE-OFF_2023_small/stage13_alanine_prepared/stage13postopt_s1901000_20260316_001735"
-    )
     ap = argparse.ArgumentParser(description="Comprehensive stage13 NPBC/PBC alanine analysis.")
-    ap.add_argument("--stage13-root", default=str(root_default))
-    ap.add_argument("--npbc-eq-dump", default="npbc/traj_alanine_nbpc_off23_stage13post_eq.dump")
-    ap.add_argument("--npbc-prod-dump", default="npbc/traj_alanine_nbpc_off23_stage13post_prod.dump")
-    ap.add_argument("--pbc-eq-dump", default="pbc/traj_alanine_pbc_off23_stage13post_eq.dump")
-    ap.add_argument("--pbc-prod-dump", default="pbc/traj_alanine_pbc_off23_stage13post_prod.dump")
+    ap.add_argument("--stage13-root", required=True, help="Directory containing the selected NPBC/PBC dump files.")
+    ap.add_argument("--npbc-eq-dump", required=True)
+    ap.add_argument("--npbc-prod-dump", required=True)
+    ap.add_argument("--pbc-eq-dump", required=True)
+    ap.add_argument("--pbc-prod-dump", required=True)
     ap.add_argument("--npbc-mode", choices=("eq", "eq+prod"), default="eq+prod")
     ap.add_argument("--pbc-mode", choices=("eq", "eq+prod"), default="eq")
     ap.add_argument("--atom-ids", default="5,7,9,15,17")

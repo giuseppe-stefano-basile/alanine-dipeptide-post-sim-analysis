@@ -27,6 +27,14 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+def display_path(path: Path, base: Path) -> str:
+    absolute = path.expanduser().absolute()
+    try:
+        return str(absolute.relative_to(base.resolve()))
+    except ValueError:
+        return str(absolute)
+
+
 def main() -> None:
     args = parse_args()
 
@@ -69,11 +77,18 @@ def main() -> None:
 
     subprocess.run(cmd, check=True)
 
+    manifest_paths = {
+        str(core): display_path(core, repo_dir),
+        str(analysis_module): display_path(analysis_module, repo_dir),
+        str(workspace): display_path(workspace, repo_dir),
+        str(outdir): display_path(outdir, repo_dir),
+    }
+    manifest_cmd = [manifest_paths.get(token, token) for token in cmd]
     manifest = {
-        "script": str(core),
-        "workspace": str(workspace),
-        "outdir": str(outdir),
-        "command": cmd,
+        "script": display_path(core, repo_dir),
+        "workspace": display_path(workspace, repo_dir),
+        "outdir": display_path(outdir, repo_dir),
+        "command": manifest_cmd,
         "notes": (
             "Comprehensive configuration: no-smoothing histogram density + FES-defined basins "
             "(sigma=0 by default) + block bootstrap + common-support FES crop."

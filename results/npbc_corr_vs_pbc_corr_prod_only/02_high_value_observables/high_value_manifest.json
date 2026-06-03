@@ -1,14 +1,14 @@
 {
-  "script": "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/reference_core/run_stage13corr_high_value_observables.py",
-  "workspace": "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/workspaces/npbc_corr_vs_pbc_corr_prod_only",
-  "outdir": "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/results/npbc_corr_vs_pbc_corr_prod_only/02_high_value_observables",
+  "script": "reference_core/run_stage13corr_high_value_observables.py",
+  "workspace": "workspaces/npbc_corr_vs_pbc_corr_prod_only",
+  "outdir": "results/npbc_corr_vs_pbc_corr_prod_only/02_high_value_observables",
   "command": [
     "python3",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/reference_core/run_stage13corr_high_value_observables.py",
+    "reference_core/run_stage13corr_high_value_observables.py",
     "--stage-root",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/workspaces/npbc_corr_vs_pbc_corr_prod_only",
+    "workspaces/npbc_corr_vs_pbc_corr_prod_only",
     "--analysis-module",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/reference_core/analyze_stage13_dihedrals.py",
+    "reference_core/analyze_stage13_dihedrals.py",
     "--npbc-eq-dump",
     "npbc_eq.dump",
     "--npbc-prod-dump",
@@ -38,7 +38,7 @@
     "--torsion-max-lag",
     "600",
     "--outdir",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/results/npbc_corr_vs_pbc_corr_prod_only/02_high_value_observables"
+    "results/npbc_corr_vs_pbc_corr_prod_only/02_high_value_observables"
   ],
   "notes": "High-value observables: torsion ACF, hydration-shell occupancy, H-bond statistics, radial density/CN"
 }

@@ -15,7 +15,10 @@ Required per comparison case:
 
 Provided in this repository:
 - case mapping: `configs/production_comparison_cases.json`
-- trajectory links: `data/trajectories/`
+- data-transfer instructions: `DATA_REQUIREMENTS.md`
+
+Not provided by the repository:
+- the location of your trajectories. Every command asks you to choose one or more `--search-root` directories. These can be an extracted Leonardo workflow directory, a download folder, or any directory containing the needed dumps/logs.
 
 ## 2) Environment (No `mace_new` Needed)
 
@@ -34,15 +37,25 @@ pip install -r environment/requirements.txt
 
 ## 3) Script Order (Use These Names)
 
-Run from repository root.
-
-1. `./scripts/00_validate_production_inputs.sh`
-2. `./scripts/05_run_single_comparison_case.sh <case_name> [bootstrap_reps] [high_value_frame_stride]`
-
-For all cases:
+Run from repository root. First choose the directory where the scripts should search for completed trajectories and logs:
 
 ```bash
-./scripts/run_all_comparison_cases.sh [bootstrap_reps] [high_value_frame_stride]
+SEARCH_ROOT=/path/to/npt_bulk_equilibration_workflow
+```
+
+For the official Leonardo student case, `SEARCH_ROOT` should be the directory containing `npbc_production/` and `pbc_production/`. See `DATA_REQUIREMENTS.md` for the expected bundle layout.
+
+1. `./scripts/00_validate_production_inputs.sh --case leonardo_npt_prod_only --search-root "$SEARCH_ROOT"`
+2. `./scripts/05_run_single_comparison_case.sh <case_name> --search-root "$SEARCH_ROOT" --bootstrap-reps <n> --high-value-frame-stride <stride>`
+
+For selected cases (repeat `--case`; omit it only when the search root contains every configured input):
+
+```bash
+./scripts/run_all_comparison_cases.sh \
+  --case leonardo_npt_prod_only \
+  --search-root "$SEARCH_ROOT" \
+  --bootstrap-reps 1000 \
+  --high-value-frame-stride 1
 ```
 
 ## 4) What Each Script Produces
@@ -115,14 +128,15 @@ Output:
 ## 5) Which Comparisons Are Configured
 
 Current production-only cases in `configs/production_comparison_cases.json`:
+- `leonardo_npt_prod_only`
 - `npbc_corr_vs_pbc_corr_prod_only`
 - `npbc_oldbias_vs_pbc_nvt_anchor_prod_only`
 
-These are the target simulation pairs to compare in this training repository.
+The config stores file names, relative paths, or glob patterns, not machine-specific absolute directories. For the Leonardo NPT workflow, use the extracted workflow folder as `--search-root`; the resolver looks for the expected production outputs under `npbc_production/` and `pbc_production/`.
 
 ## 6) Suggested Teaching Workflow
 
-1. Validate inputs with `00_validate_production_inputs.sh`.
+1. Validate inputs with `00_validate_production_inputs.sh --case <case_name> --search-root "$SEARCH_ROOT"`.
 2. Run one case with `bootstrap_reps=300` for a classroom demo.
 3. Re-run the same case with `bootstrap_reps=1000` for final reporting.
 4. Use `high_value_frame_stride=10` for quick teaching demos and `1` for final-quality observables.

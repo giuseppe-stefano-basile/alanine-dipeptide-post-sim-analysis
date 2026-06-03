@@ -5,5 +5,17 @@ __pycache__/
 # Generated heavy intermediate files
 workspaces/
 
+# Raw trajectory bundles are external inputs, not repository content.
+data/**/*.dump
+data/**/*.lammpstrj
+data/**/*.dcd
+data/**/*.xtc
+data/**/*.trr
+data/**/*.nc
+data/**/*.log
+
 # Optional local env
 .venv/
+
+# Local screenshots shared during debugging.
+Screenshot*.png

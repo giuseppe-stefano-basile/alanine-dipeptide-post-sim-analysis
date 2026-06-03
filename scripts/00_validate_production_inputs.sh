@@ -4,9 +4,63 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 CASES_JSON="$REPO_DIR/configs/production_comparison_cases.json"
+CASES=()
+SEARCH_ROOTS=()
+STRICT_LOGS=0
+
+usage() {
+  cat <<EOF
+Usage: $0 --search-root DIR [options]
+
+Required:
+  --search-root DIR       Directory to search for trajectories/logs. Repeatable.
+
+Options:
+  --case NAME             Validate only one configured case. Repeatable.
+  --cases-json FILE       Case config file. Default: $CASES_JSON
+  --strict-logs           Treat missing optional logs as errors.
+  -h, --help              Show this help.
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --search-root)
+      SEARCH_ROOTS+=("${2:?missing value for --search-root}")
+      shift 2
+      ;;
+    --case)
+      CASES+=("${2:?missing value for --case}")
+      shift 2
+      ;;
+    --cases-json)
+      CASES_JSON="${2:?missing value for --cases-json}"
+      shift 2
+      ;;
+    --strict-logs)
+      STRICT_LOGS=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
 
 if [[ ! -f "$CASES_JSON" ]]; then
   echo "ERROR: cases file not found: $CASES_JSON"
+  exit 2
+fi
+
+if [[ ${#SEARCH_ROOTS[@]} -eq 0 ]]; then
+  echo "ERROR: choose at least one directory with --search-root" >&2
+  usage >&2
   exit 2
 fi
 
@@ -55,25 +109,18 @@ check_log_completion() {
   fi
 }
 
-python - "$CASES_JSON" "$REPO_DIR" <<'PY' | while IFS=$'\t' read -r name desc npbc_dump pbc_dump npbc_log pbc_log; do
-import json
-import sys
-from pathlib import Path
+RESOLVE_CMD=(python3 "$SCRIPT_DIR/resolve_production_inputs.py" --cases-json "$CASES_JSON" --format tsv)
+for root in "${SEARCH_ROOTS[@]}"; do
+  RESOLVE_CMD+=(--search-root "$root")
+done
+for case_name in "${CASES[@]}"; do
+  RESOLVE_CMD+=(--case "$case_name")
+done
+if [[ "$STRICT_LOGS" -eq 1 ]]; then
+  RESOLVE_CMD+=(--strict-logs)
+fi
 
-cases_file = Path(sys.argv[1])
-repo = Path(sys.argv[2])
-obj = json.loads(cases_file.read_text())
-for c in obj.get("cases", []):
-    fields = [
-        c["name"],
-        c.get("description", ""),
-        str((repo / c["npbc_prod_dump"]).resolve()),
-        str((repo / c["pbc_prod_dump"]).resolve()),
-        str((repo / c.get("npbc_prod_log", "")).resolve()) if c.get("npbc_prod_log") else "",
-        str((repo / c.get("pbc_prod_log", "")).resolve()) if c.get("pbc_prod_log") else "",
-    ]
-    print("\t".join(fields))
-PY
+"${RESOLVE_CMD[@]}" | while IFS=$'\t' read -r name desc npbc_dump pbc_dump npbc_log pbc_log; do
 
   echo "============================================================"
   echo "CASE: $name"

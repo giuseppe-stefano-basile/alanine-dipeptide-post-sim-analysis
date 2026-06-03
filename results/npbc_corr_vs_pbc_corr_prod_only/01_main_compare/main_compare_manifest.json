@@ -1,14 +1,14 @@
 {
-  "script": "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/reference_core/run_stage13corr_full_solute_compare.py",
-  "workspace": "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/workspaces/npbc_corr_vs_pbc_corr_prod_only",
-  "outdir": "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/results/npbc_corr_vs_pbc_corr_prod_only/01_main_compare",
+  "script": "reference_core/run_stage13corr_full_solute_compare.py",
+  "workspace": "workspaces/npbc_corr_vs_pbc_corr_prod_only",
+  "outdir": "results/npbc_corr_vs_pbc_corr_prod_only/01_main_compare",
   "command": [
     "python3",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/reference_core/run_stage13corr_full_solute_compare.py",
+    "reference_core/run_stage13corr_full_solute_compare.py",
     "--stage-root",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/workspaces/npbc_corr_vs_pbc_corr_prod_only",
+    "workspaces/npbc_corr_vs_pbc_corr_prod_only",
     "--analysis-module",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/reference_core/analyze_stage13_dihedrals.py",
+    "reference_core/analyze_stage13_dihedrals.py",
     "--npbc-eq-dump",
     "npbc_eq.dump",
     "--npbc-prod-dump",
@@ -45,7 +45,7 @@
     "--crop-min-prob",
     "0.0",
     "--outdir",
-    "/home/utente/giuseppe/ML_Embedding/MACE/Alanine_dipeptide/post_sim_analysis_repo/results/npbc_corr_vs_pbc_corr_prod_only/01_main_compare"
+    "results/npbc_corr_vs_pbc_corr_prod_only/01_main_compare"
   ],
   "notes": "Comprehensive configuration: no-smoothing histogram density + FES-defined basins (sigma=0 by default) + block bootstrap + common-support FES crop."
 }
